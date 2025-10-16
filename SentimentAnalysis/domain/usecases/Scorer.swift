@@ -8,7 +8,7 @@
 import Foundation
 import NaturalLanguage // NLP
 
-struct MyScore {
+struct Scorer {
     let tagger = NLTagger(tagSchemes: [.sentimentScore])
     
     func score(_ text: String) -> Double {
@@ -24,35 +24,10 @@ struct MyScore {
                 let score = Double(sentiment)
             {
                 sentimentScore = score
+                return true
             }
             
             return false
-        }
-        
-        return sentimentScore
-    }
-    
-    // TODO: refactor
-    func score(_ text: String) async -> Double {
-        var sentimentScore: Double = 0.0
-        tagger.string = text
-        
-        let didEnumerateTags: Bool = await withCheckedContinuation { continuation in
-            tagger.enumerateTags(
-                in: text.startIndex..<text.endIndex,
-                unit: .paragraph,
-                scheme: .sentimentScore
-            ) { tag, _ in
-                if
-                    let sentiment = tag?.rawValue,
-                    let score = Double(sentiment)
-                {
-                    sentimentScore = score
-                }
-                
-                continuation.resume(returning: false)
-                return false
-            }
         }
         
         return sentimentScore

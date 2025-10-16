@@ -13,7 +13,11 @@ struct SentimentAnalysisApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(
+                responseRepository: ResponseRepositoryImplementation(
+                    responseDataSource: MockResponseDataSource(scorer: Scorer())
+                )
+            )
         }
     }
 }
