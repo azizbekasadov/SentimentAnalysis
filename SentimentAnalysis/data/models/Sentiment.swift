@@ -10,7 +10,7 @@ import SwiftUI
 import Foundation
 
 // TODO: redo it with strategy and add unit tests;
-enum Sentiment: String, Plottable  {
+enum Sentiment: String, Plottable, CaseIterable  {
     case positive = "Positive"
     case moderate = "Moderate"
     case negative = "Negative"
